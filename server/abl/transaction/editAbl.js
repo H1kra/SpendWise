@@ -9,14 +9,14 @@ const schema = {
   type: "object",
   properties: {
     id: { type: "string" },
-    userId: { type: "string" },
+//    userId: { type: "string" },
     label: { type: "string" },
     amount: {type: "number"},
     type: { type: "string", enum: ["income", "expense"] },
     date: { type: "string", format: "date-time" },
     note: { type: "string"},
   },
-  required: ["id", "userId"],
+  required: ["id"],
   additionalProperties: false,
 };
 
