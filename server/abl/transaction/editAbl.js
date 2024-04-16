@@ -16,7 +16,7 @@ const schema = {
     date: { type: "string", format: "date-time" },
     note: { type: "string"},
   },
-  required: ["id"],
+  required: ["id", "userId"],
   additionalProperties: false,
 };
 
@@ -35,8 +35,8 @@ async function EditAbl(req, res) {
       return;
     }
 
-    const updatedTransaction = transactionDao.edit(transaction);
-    if (!updatedTransaction) {
+    const editedTransaction = transactionDao.edit(transaction);
+    if (!editedTransaction) {
       res.status(404).json({
         code: "transactionNotFound",
         message: `Transaction ${transaction.id} not found`,
@@ -44,7 +44,7 @@ async function EditAbl(req, res) {
       return;
     }
 
-    res.json(updatedTransaction);
+    res.json(editedTransaction);
   } catch (e) {
     res.status(500).json({ message: e.message });
   }

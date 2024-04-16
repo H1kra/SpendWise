@@ -6,9 +6,9 @@ const schema = {
   type: "object",
   properties: {
     id: { type: "string" },
-//    userId: { type: "string" },
+    userId: { type: "string" },
   },
-  required: ["id"],
+  required: ["id", "userId"],
   additionalProperties: false,
 };
 

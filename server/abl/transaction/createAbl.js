@@ -14,7 +14,7 @@ const schema = {
     date: { type: "string", format: "date-time" },
     note: { type: "string"},
   },
-  required: ["label", "amount", "type", "date"],
+  required: ["userId","label", "amount", "type", "date"],
   additionalProperties: false,
 };
 
