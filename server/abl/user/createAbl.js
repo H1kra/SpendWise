@@ -1,5 +1,8 @@
 const Ajv = require("ajv");
+const addFormats = require("ajv-formats");
 const ajv = new Ajv();
+addFormats(ajv);
+
 
 const userDao = require("../../dao/user-dao.js");
 
@@ -8,7 +11,7 @@ const schema = {
   properties: {
     name: { type: "string" },
     surename: {type: "string"},
-    email: { type: "string" },
+    email: { type: "string", format:"email"},
   },
   required: ["name","surename" ,"email"],
   additionalProperties: false,
