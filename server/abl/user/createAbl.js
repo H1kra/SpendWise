@@ -1,6 +1,7 @@
 const Ajv = require("ajv");
 const addFormats = require("ajv-formats");
 const ajv = new Ajv();
+const bcrypt = require("bcrypt")
 addFormats(ajv);
 
 
@@ -12,8 +13,9 @@ const schema = {
     name: { type: "string" },
     surename: {type: "string"},
     email: { type: "string", format:"email"},
+    password: { type: "string" }
   },
-  required: ["name","surename" ,"email"],
+  required: ["name","surename" ,"email", "password"],
   additionalProperties: false,
 };
 
@@ -41,6 +43,9 @@ async function CreateAbl(req, res) {
       });
       return;
     }
+
+    const hashPass = await bcrypt.hash(user.password, 10);
+    user.password = hashPass
 
     user = userDao.create(user);
     res.json(user);
