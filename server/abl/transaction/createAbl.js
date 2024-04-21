@@ -21,8 +21,6 @@ const schema = {
 async function CreateAbl(req, res) {
   try {
     let transaction = req.body;
-//    const userId = req.user.id;
-//    transaction.userId = userId;
 
     // validate input
     const valid = ajv.validate(schema, transaction);
