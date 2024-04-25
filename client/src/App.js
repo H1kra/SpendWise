@@ -1,25 +1,33 @@
-import logo from './logo.svg';
-import './App.css';
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import UserProvider from "./user/UserProvider";
+import Layout from "./Layout";
+
+
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    return (
+        <div style={componentStyle()}>
+            <UserProvider>
+                <BrowserRouter>
+                    <Routes>
+                        <Route path="/" element={<Layout />}>
+                        </Route>
+                    </Routes>
+                </BrowserRouter>
+            </UserProvider>
+        </div>
+    );
 }
 
-export default App;
+
+            function componentStyle() {
+            return {
+            height: "100vh",
+            display: "flex",
+            flexDirection: "column",
+            overflow: "hidden",
+            backgroundColor: "#187bcd",
+        };
+        }
+
+            export default App;
