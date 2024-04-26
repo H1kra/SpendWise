@@ -35,12 +35,12 @@ function NavBar() {
                         </Link>
                     </div>
                     <div className="user-login">
-                        <NavDropdown
-                            title={loggedInUser ? loggedInUser.name : <Icon path={mdiAccount} size={1} />}
-                            drop={"start"}
-                        >
-                            {getUserMenuList({ userList, loggedInUser, handlerMap })}
-                        </NavDropdown>
+                                    <NavDropdown
+                                        title={loggedInUser ? loggedInUser.name : <Icon path={mdiAccount} size={1} />}
+                                        drop={"start"}
+                                    >
+                                        {getUserMenuList({ userList, loggedInUser, handlerMap })}
+                                    </NavDropdown>
                     </div>
                         {SideBarData.map((item, index) => {
                             return (
@@ -63,7 +63,7 @@ function getUserMenuList({ userList, loggedInUser, handlerMap }) {
     // temporary solution to enable login/logout
     const userMenuItemList = userList.map((user) => (
         <NavDropdown.Item key={user.id} onClick={() => handlerMap.login(user.id)}>
-            {user.name}
+            <li>{user.name}</li>
         </NavDropdown.Item>
     ));
 

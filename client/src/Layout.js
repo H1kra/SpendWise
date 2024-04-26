@@ -22,7 +22,8 @@ const Layout = () => {
 function bodyStyle() {
     return {
         overflow: "auto",
-        padding: "16px",
+        padding: "0px",
+        margin : "0px",
         flex: "1",
         borderTop: "white 4px solid",
         borderBottom: "white 4px solid",

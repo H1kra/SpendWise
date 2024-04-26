@@ -13,6 +13,7 @@
     justify-content: center;
     align-items: center;
     right: 0;
+
 }
 .menu-bars {
 
@@ -29,6 +30,7 @@
     top: 0;
     right: -100%;
     transition: 650ms;
+    border-left: solid lightgrey 1px;
 }
 
 .nav-menu.active {
@@ -40,7 +42,7 @@
     display: flex;
     justify-content: start;
     align-items: center;
-    padding: 8px 0 8px 16px;
+    padding: 8px 8px 8px 8px;
     list-style: none;
     height: 60px;
 }
