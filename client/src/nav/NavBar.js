@@ -1,57 +1,63 @@
-import { useNavigate } from "react-router-dom";
+import React, { useState } from "react";
 
 import { useContext } from "react";
 import { UserContext } from "../user/UserContext";
 
-import Container from "react-bootstrap/Container";
-import Nav from "react-bootstrap/Nav";
-import Navbar from "react-bootstrap/Navbar";
 import NavDropdown from "react-bootstrap/NavDropdown";
+import { Link} from "react-router-dom";
+import { SideBarData } from "./NavBarData";
+import "./NavBar.css";
 
-import Icon from "@mdi/react";
-import { mdiScaleBalance, mdiLogout } from "@mdi/js";
-import Button from "react-bootstrap/esm/Button";
+import Icon from '@mdi/react';
+import {mdiLogout} from "@mdi/js";
+import { mdiAccount } from '@mdi/js';
+import { mdiMenu } from '@mdi/js';
+import { mdiWindowClose } from '@mdi/js';
 
 function NavBar() {
     const { userList, loggedInUser, handlerMap } = useContext(UserContext);
-    const navigate = useNavigate();
+    const [ sidebar, setSidebar ] = useState(false);
+
+    const showSidebar = () => setSidebar(!sidebar);
 
     return (
-        <Navbar expand="lg" style={componentStyle()}>
-            <Container>
-                <Navbar.Brand>
-                    <Button style={logoStyle()} onClick={() => navigate("/")}>
-                        <Icon path={mdiScaleBalance} size={3} color={"black"}/>
-                        SpendWise
-                    </Button>
-                </Navbar.Brand>
-                <Nav>
-                    <NavDropdown
-                        title={loggedInUser ? loggedInUser.name : "Přihlaš se"}
-                        drop={"start"}
-                    >
-                        {getUserMenuList({ userList, loggedInUser, handlerMap })}
-                    </NavDropdown>
-                </Nav>
-            </Container>
-        </Navbar>
+        <>
+            <div className="navbar">
+                <Link to="#" className="menu-bars" >
+                    <Icon path={mdiMenu} size={1} onClick={showSidebar}/>
+                </Link>
+            </div>
+            <nav className={sidebar ? "nav-menu active" : "nav-menu"}>
+                <ul className="nav-menu-items">
+                    <div className="navbar-toggle" >
+                        <Link to="#" className="menu-bars" >
+                            <Icon path={mdiWindowClose} size={1} onClick={showSidebar}/>
+                        </Link>
+                    </div>
+                    <div className="user-login">
+                        <NavDropdown
+                            title={loggedInUser ? loggedInUser.name : <Icon path={mdiAccount} size={1} />}
+                            drop={"start"}
+                        >
+                            {getUserMenuList({ userList, loggedInUser, handlerMap })}
+                        </NavDropdown>
+                    </div>
+                        {SideBarData.map((item, index) => {
+                            return (
+                                <li key={index} className={item.cname} onClick={showSidebar}>
+                                    <Link to={item.path}>
+                                        {item.icon}
+                                        <span>{item.title}</span>
+                                    </Link>
+                                </li>
+                            );
+                        })}
+                </ul>
+            </nav>
+        </>
     );
 }
 
-function componentStyle() {
-    return { backgroundColor: "#FFFFFF" };
-}
-
-function logoStyle() {
-    return {
-        backgroundColor: "#FFFFFF",
-        display: "flex",
-        alignItems: "center",
-        gap: "8px",
-        color: "black",
-        border: "0px"
-    };
-}
 
 function getUserMenuList({ userList, loggedInUser, handlerMap }) {
     // temporary solution to enable login/logout

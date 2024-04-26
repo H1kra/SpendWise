@@ -1,3 +1,4 @@
+import React from 'react';
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import UserProvider from "./user/UserProvider";
 import Layout from "./Layout";
@@ -26,7 +27,7 @@ function App() {
             display: "flex",
             flexDirection: "column",
             overflow: "hidden",
-            backgroundColor: "#187bcd",
+            backgroundColor: "white",
         };
         }
 

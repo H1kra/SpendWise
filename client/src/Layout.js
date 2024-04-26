@@ -1,13 +1,14 @@
 import { Outlet } from "react-router-dom";
 
 import NavBar from "./nav/NavBar";
+import LogoImg from "./logo/Logo";
+
 
 const Layout = () => {
     return (
         <>
-            <div className="card-header">
-                <NavBar />
-            </div>
+            <LogoImg/>
+            <NavBar/>
             <div style={bodyStyle()}>
                 <Outlet />
             </div>
@@ -29,7 +30,7 @@ function bodyStyle() {
 }
 
 function footerStyle() {
-    return { padding: "8px", textAlign: "center", backgroundColor: "#d63232" };
+    return { padding: "8px", textAlign: "center", backgroundColor: "lightgrey" };
 }
 
 export default Layout;
