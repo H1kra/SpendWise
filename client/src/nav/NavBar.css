@@ -16,7 +16,6 @@
 
 }
 .menu-bars {
-
     font-size: 2rem;
     background: none;
 }
@@ -82,6 +81,29 @@
     display: flex;
     justify-content: start;
     align-items: center;
+    list-style: none;
+}
+
+.user-login .dropdown-menu{
+    float: right;
+    display: block;
+    width: 100px;
+    border: solid black 1px;
+    border-radius: 5px;
+    text-align: center;
+}
+
+.user-login .dropdown-menu.show{
+    right: -200% !important;
+}
+
+.user-login .dropdown-menu .dropdown-item :hover {
+    background-color: lightgrey;
+}
+
+.user-login a{
+    text-decoration: none;
+    color: black;
 }
 
 span {

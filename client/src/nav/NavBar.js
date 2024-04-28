@@ -17,8 +17,10 @@ import { mdiWindowClose } from '@mdi/js';
 function NavBar() {
     const { userList, loggedInUser, handlerMap } = useContext(UserContext);
     const [ sidebar, setSidebar ] = useState(false);
+    const [dropdownOpen, setDropdownOpen] = useState(false);
 
     const showSidebar = () => setSidebar(!sidebar);
+    const toggleDropdown = () => setDropdownOpen(!dropdownOpen);
 
     return (
         <>
@@ -37,6 +39,8 @@ function NavBar() {
                     <div className="user-login">
                                     <NavDropdown
                                         title={loggedInUser ? loggedInUser.name : <Icon path={mdiAccount} size={1} />}
+                                        show={dropdownOpen}
+                                        onToggle={toggleDropdown}
                                         drop={"start"}
                                     >
                                         {getUserMenuList({ userList, loggedInUser, handlerMap })}
@@ -63,7 +67,7 @@ function getUserMenuList({ userList, loggedInUser, handlerMap }) {
     // temporary solution to enable login/logout
     const userMenuItemList = userList.map((user) => (
         <NavDropdown.Item key={user.id} onClick={() => handlerMap.login(user.id)}>
-            <li>{user.name}</li>
+            <li>{user.name} {user.surename}</li>
         </NavDropdown.Item>
     ));
 
