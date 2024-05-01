@@ -40,7 +40,7 @@ function NavBar() {
                                     <NavDropdown
                                         title={loggedInUser ? loggedInUser.name : <Icon path={mdiAccount} size={1} />}
                                         show={dropdownOpen}
-                                        onToggle={toggleDropdown}
+                                        onClick={toggleDropdown}
                                         drop={"start"}
                                     >
                                         {getUserMenuList({ userList, loggedInUser, handlerMap })}
