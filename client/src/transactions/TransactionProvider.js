@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
 import { useLocation, useSearchParams, useNavigate } from "react-router-dom";
 
-import { EventContext } from "./TransactionContext.js";
+import { TransactionContext } from "./TransactionContext.js";
 
-function EventProvider({ children }) {
-    const [eventLoadObject, setEventLoadObject] = useState({
+function TransactionProvider({ children }) {
+    const [transactionLoadObject, setTransactionLoadObject] = useState({
         state: "ready",
         error: null,
         data: null,
@@ -21,9 +21,9 @@ function EventProvider({ children }) {
     }, []);
 
     async function handleLoad() {
-        setEventLoadObject((current) => ({ ...current, state: "pending" }));
+        setTransactionLoadObject((current) => ({ ...current, state: "pending" }));
         const response = await fetch(
-            `http://localhost:8000/event/get?id=${new URLSearchParams(
+            `http://localhost:8000/transaction/?id=${new URLSearchParams(
                 location.search
             ).get("id")}`,
             {
@@ -32,10 +32,10 @@ function EventProvider({ children }) {
         );
         const responseJson = await response.json();
         if (response.status < 400) {
-            setEventLoadObject({ state: "ready", data: responseJson });
+            setTransactionLoadObject({ state: "ready", data: responseJson });
             return responseJson;
         } else {
-            setEventLoadObject((current) => ({
+            setTransactionLoadObject((current) => ({
                 state: "error",
                 data: current.data,
                 error: responseJson.error,
@@ -44,12 +44,12 @@ function EventProvider({ children }) {
         }
     }
     const value = {
-        event: eventLoadObject.data,
+        transaction: transactionLoadObject.data,
     };
 
     return (
-        <EventContext.Provider value={value}>{children}</EventContext.Provider>
+        <TransactionContext.Provider value={value}>{children}</TransactionContext.Provider>
     );
 }
 
-export default EventProvider;
+export default TransactionProvider;

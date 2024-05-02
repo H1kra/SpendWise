@@ -1,5 +1,5 @@
 import { useContext, useState } from "react";
-import { EventListContext } from "./TransactionListContext.js";
+import { TransactionListContext } from "./TransactionListContext.js";
 
 import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
@@ -9,15 +9,15 @@ import Alert from "react-bootstrap/Alert";
 import Icon from "@mdi/react";
 import { mdiLoading } from "@mdi/js";
 
-function ConfirmDeleteDialog({ setShowConfirmDeleteDialog, event }) {
-    const { state, handlerMap } = useContext(EventListContext);
+function ConfirmDeleteDialog({ setShowConfirmDeleteDialog, transaction }) {
+    const { state, handlerMap } = useContext(TransactionListContext);
     const [showAlert, setShowAlert] = useState(null);
     const isPending = state === "pending";
 
     return (
         <Modal show={true} onHide={() => setShowConfirmDeleteDialog(false)}>
             <Modal.Header>
-                <Modal.Title>Smazat událost</Modal.Title>
+                <Modal.Title>Smazat transakci</Modal.Title>
                 <CloseButton onClick={() => setShowConfirmDeleteDialog(false)} />
             </Modal.Header>
             <Modal.Body style={{ position: "relative" }}>
@@ -27,7 +27,7 @@ function ConfirmDeleteDialog({ setShowConfirmDeleteDialog, event }) {
                     dismissible
                     onClose={() => setShowAlert(null)}
                 >
-                    <Alert.Heading>Nepodařilo se vytvořit událost</Alert.Heading>
+                    <Alert.Heading>Nepodařilo se vytvořit transakci</Alert.Heading>
                     <pre>{showAlert}</pre>
                 </Alert>
                 {isPending ? (
@@ -35,7 +35,7 @@ function ConfirmDeleteDialog({ setShowConfirmDeleteDialog, event }) {
                         <Icon path={mdiLoading} size={2} spin />
                     </div>
                 ) : null}
-                Opravdu chcete smazat událost {event.name}?
+                Opravdu chcete smazat transakci {transaction.label}?
             </Modal.Body>
             <Modal.Footer>
                 <Button
@@ -51,7 +51,7 @@ function ConfirmDeleteDialog({ setShowConfirmDeleteDialog, event }) {
                     disabled={isPending}
                     onClick={async (e) => {
                         try {
-                            await handlerMap.handleDelete({ id: event.id });
+                            await handlerMap.handleDelete({ id: transaction.id });
                             setShowConfirmDeleteDialog(false);
                         } catch (e) {
                             console.error(e);

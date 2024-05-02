@@ -1,22 +1,22 @@
 import { useContext } from "react";
-import { EventContext } from "./TransactionContext";
+import { TransactionContext } from "./TransactionContext";
 import Button from "react-bootstrap/esm/Button.js";
 import { useNavigate } from "react-router-dom";
 
-import EventDateTimeBadge from "./TransactionDateBadge";
+import TransactionDateTimeBadge from "./TransactionDateBadge";
 
 import Icon from "@mdi/react";
 import { mdiPencil } from "@mdi/js";
 
-function EventRoute({ setShowEventForm }) {
+function TransactionRoute({ setShowTransactionForm }) {
     const navigate = useNavigate();
-    const { event } = useContext(EventContext);
+    const { transaction } = useContext(TransactionContext);
 
     return (
         <div className="card border-0 shadow rounded" style={componentStyle()}>
-            {event ? (
+            {transaction ? (
                 <>
-                    <EventDateTimeBadge event={event} />
+                    <TransactionDateTimeBadge transaction={transaction} />
                     <div
                         style={{
                             display: "grid",
@@ -25,7 +25,7 @@ function EventRoute({ setShowEventForm }) {
                             alignItems: "center",
                         }}
                     >
-                        <Button onClick={() => setShowEventForm(event)} size={"sm"}>
+                        <Button onClick={() => setShowTransactionForm(transaction)} size={"sm"}>
                             <Icon path={mdiPencil} size={0.7} />
                         </Button>
                     </div>
@@ -48,4 +48,4 @@ function componentStyle() {
     };
 }
 
-export default EventRoute;
+export default TransactionRoute;

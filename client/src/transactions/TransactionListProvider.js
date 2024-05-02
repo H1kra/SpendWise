@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
-import { EventListContext } from "./TransactionListContext.js";
+import { TransactionListContext } from "./TransactionListContext.js";
 
-function EventListProvider({ children }) {
-    const [eventLoadObject, setEventLoadObject] = useState({
+function TransactionListProvider({ children }) {
+    const [transactionLoadObject, setTransactionLoadObject] = useState({
         state: "ready",
         error: null,
         data: null,
@@ -13,16 +13,16 @@ function EventListProvider({ children }) {
     }, []);
 
     async function handleLoad() {
-        setEventLoadObject((current) => ({ ...current, state: "pending" }));
-        const response = await fetch(`http://localhost:8000/event/list`, {
+        setTransactionLoadObject((current) => ({ ...current, state: "pending" }));
+        const response = await fetch(`http://localhost:8000/transaction/list`, {
             method: "GET",
         });
         const responseJson = await response.json();
         if (response.status < 400) {
-            setEventLoadObject({ state: "ready", data: responseJson });
+            setTransactionLoadObject({ state: "ready", data: responseJson });
             return responseJson;
         } else {
-            setEventLoadObject((current) => ({
+            setTransactionLoadObject((current) => ({
                 state: "error",
                 data: current.data,
                 error: responseJson.error,
@@ -32,8 +32,8 @@ function EventListProvider({ children }) {
     }
 
     async function handleCreate(dtoIn) {
-        setEventLoadObject((current) => ({ ...current, state: "pending" }));
-        const response = await fetch(`http://localhost:8000/event/create`, {
+        setTransactionLoadObject((current) => ({ ...current, state: "pending" }));
+        const response = await fetch(`http://localhost:8000/transaction/create`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -43,14 +43,14 @@ function EventListProvider({ children }) {
         const responseJson = await response.json();
 
         if (response.status < 400) {
-            setEventLoadObject((current) => {
+            setTransactionLoadObject((current) => {
                 current.data.push(responseJson);
                 current.data.sort((a, b) => new Date(a.date) - new Date(b.date));
                 return { state: "ready", data: current.data };
             });
             return responseJson;
         } else {
-            setEventLoadObject((current) => {
+            setTransactionLoadObject((current) => {
                 return { state: "error", data: current.data, error: responseJson };
             });
             throw new Error(JSON.stringify(responseJson, null, 2));
@@ -58,8 +58,8 @@ function EventListProvider({ children }) {
     }
 
     async function handleUpdate(dtoIn) {
-        setEventLoadObject((current) => ({ ...current, state: "pending" }));
-        const response = await fetch(`http://localhost:8000/event/update`, {
+        setTransactionLoadObject((current) => ({ ...current, state: "pending" }));
+        const response = await fetch(`http://localhost:8000/transaction/edit`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(dtoIn),
@@ -67,17 +67,17 @@ function EventListProvider({ children }) {
         const responseJson = await response.json();
 
         if (response.status < 400) {
-            setEventLoadObject((current) => {
-                const eventIndex = current.data.findIndex(
+            setTransactionLoadObject((current) => {
+                const transactionIndex = current.data.findIndex(
                     (e) => e.id === responseJson.id
                 );
-                current.data[eventIndex] = responseJson;
+                current.data[transactionIndex] = responseJson;
                 current.data.sort((a, b) => new Date(a.date) - new Date(b.date));
                 return { state: "ready", data: current.data };
             });
             return responseJson;
         } else {
-            setEventLoadObject((current) => ({
+            setTransactionLoadObject((current) => ({
                 state: "error",
                 data: current.data,
                 error: responseJson,
@@ -87,8 +87,8 @@ function EventListProvider({ children }) {
     }
 
     async function handleDelete(dtoIn) {
-        setEventLoadObject((current) => ({ ...current, state: "pending" }));
-        const response = await fetch(`http://localhost:8000/event/delete`, {
+        setTransactionLoadObject((current) => ({ ...current, state: "pending" }));
+        const response = await fetch(`http://localhost:8000/transaction/delete`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(dtoIn),
@@ -96,16 +96,16 @@ function EventListProvider({ children }) {
         const responseJson = await response.json();
 
         if (response.status < 400) {
-            setEventLoadObject((current) => {
-                const eventIndex = current.data.findIndex(
+            setTransactionLoadObject((current) => {
+                const transactionIndex = current.data.findIndex(
                     (e) => e.id === responseJson.id
                 );
-                current.data.splice(eventIndex, 1);
+                current.data.splice(transactionIndex, 1);
                 return { state: "ready", data: current.data };
             });
             return responseJson;
         } else {
-            setEventLoadObject((current) => ({
+            setTransactionLoadObject((current) => ({
                 state: "error",
                 data: current.data,
                 error: responseJson,
@@ -114,38 +114,18 @@ function EventListProvider({ children }) {
         }
     }
 
-    async function handleAttendance(dtoIn) {
-        setEventLoadObject((current) => ({ ...current, state: "pending" }));
-        const response = await fetch(`http://localhost:8000/attendance/update`, {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(dtoIn),
-        });
-        const responseJson = await response.json();
-
-        if (response.status < 400) {
-            await handleLoad();
-        } else {
-            setEventLoadObject((current) => ({
-                state: "error",
-                data: current.data,
-                error: responseJson,
-            }));
-            throw new Error(JSON.stringify(responseJson, null, 2));
-        }
-    }
 
     const value = {
-        state: eventLoadObject.state,
-        eventList: eventLoadObject.data || [],
-        handlerMap: { handleCreate, handleUpdate, handleDelete, handleAttendance },
+        state: transactionLoadObject.state,
+        transactionList: transactionLoadObject.data || [],
+        handlerMap: { handleCreate, handleUpdate, handleDelete },
     };
 
     return (
-        <EventListContext.Provider value={value}>
+        <TransactionListContext.Provider value={value}>
             {children}
-        </EventListContext.Provider>
+        </TransactionListContext.Provider>
     );
 }
 
-export default EventListProvider;
+export default TransactionListProvider;

@@ -2,34 +2,34 @@ import React from 'react';
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import UserProvider from "./user/UserProvider";
 import Layout from "./Layout";
-import EventList from "./transactions/TransactionList";
+import TransactionList from "./transactions/TransactionList";
 
-import EventListProvider from "./transactions/TransactionListProvider";
-import EventProvider from "./transactions/TransactionProvider";
-import EventRoute from "./transactions/TransactionRoute";
+import TransactionListProvider from "./transactions/TransactionListProvider";
+import TransactionProvider from "./transactions/TransactionProvider";
+import TransactionRoute from "./transactions/TransactionRoute";
 
 function App() {
     return (
         <div style={componentStyle()}>
             <UserProvider>
-                <EventListProvider>
+                <TransactionListProvider>
                     <BrowserRouter>
                         <Routes>
                             <Route path="/" element={<Layout />}>
-                                <Route index element={<EventList />} />
+                                <Route index element={<TransactionList />} />
                                 <Route
                                     path="eventDetail"
                                     element={
-                                        <EventProvider>
-                                            <EventRoute />
-                                        </EventProvider>
+                                        <TransactionProvider>
+                                            <TransactionRoute />
+                                        </TransactionProvider>
                                     }
                                 />
                                 <Route path="*" element={"not found"} />
                             </Route>
                         </Routes>
                     </BrowserRouter>
-                </EventListProvider>
+                </TransactionListProvider>
             </UserProvider>
         </div>
     );

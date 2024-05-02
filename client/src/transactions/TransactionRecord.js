@@ -1,18 +1,18 @@
 import Button from "react-bootstrap/esm/Button.js";
 import { useNavigate } from "react-router-dom";
 
-import EventDateTimeBadge from "./TransactionDateBadge";
+import TransactionDateTimeBadge from "./TransactionDateBadge";
 
 
 import Icon from "@mdi/react";
 import { mdiPencil, mdiTrashCanOutline } from "@mdi/js";
 
-function EventCard({ event, setShowEventForm, setShowConfirmDeleteDialog }) {
+function TransactionCard({ transaction, setShowTransactionForm, setShowConfirmDeleteDialog }) {
     const navigate = useNavigate();
 
     return (
         <div className="card border-0 shadow rounded" style={componentStyle()}>
-            <EventDateTimeBadge event={event} />
+            <TransactionDateTimeBadge transaction={transaction} />
             <div
                 style={{
                     display: "grid",
@@ -21,11 +21,11 @@ function EventCard({ event, setShowEventForm, setShowConfirmDeleteDialog }) {
                     alignItems: "center",
                 }}
             >
-                <Button onClick={() => setShowEventForm(event)} size={"sm"}>
+                <Button onClick={() => setShowTransactionForm(transaction)} size={"sm"}>
                     <Icon path={mdiPencil} size={0.7} />
                 </Button>
                 <Button
-                    onClick={() => setShowConfirmDeleteDialog(event)}
+                    onClick={() => setShowConfirmDeleteDialog(transaction)}
                     size={"sm"}
                     variant="danger"
                 >
@@ -47,4 +47,4 @@ function componentStyle() {
     };
 }
 
-export default EventCard;
+export default TransactionCard;
