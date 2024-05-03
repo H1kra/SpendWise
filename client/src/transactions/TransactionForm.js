@@ -41,7 +41,7 @@ function TransactionForm({ setShowTransactionForm, transaction }) {
                 <Modal.Header>
                     <Modal.Title>{`${
                         transaction.id ? "Upravit" : "Vytvořit"
-                    } událost`}</Modal.Title>
+                    } transakci`}</Modal.Title>
                     <CloseButton onClick={() => setShowTransactionForm(false)} />
                 </Modal.Header>
                 <Modal.Body style={{ position: "relative" }}>
