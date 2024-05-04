@@ -11,7 +11,7 @@ import Icon from "@mdi/react";
 import { mdiPlusBoxOutline, mdiPlusBoxMultipleOutline } from "@mdi/js";
 import ConfirmDeleteDialog from "./ConfirmDeleteDialog.js";
 
-function TransctionList() {
+function TransactionList() {
     const { transactionList } = useContext(TransactionListContext);
     const [showTransactionForm, setShowTransactionForm] = useState(false);
     const [showConfirmDeleteDialog, setShowConfirmDeleteDialog] = useState(false);
@@ -55,4 +55,4 @@ function TransctionList() {
     );
 }
 
-export default TransctionList;
+export default TransactionList;
