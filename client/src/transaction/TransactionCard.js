@@ -5,7 +5,7 @@ import TransactionDateTimeBadge from "./TransactionDateTimeBadge";
 import TransactionDetail from "./TransactionDetail";
 
 import Icon from "@mdi/react";
-import { mdiEyeOutline, mdiPencil, mdiTrashCanOutline } from "@mdi/js";
+import {  mdiPencil, mdiTrashCanOutline } from "@mdi/js";
 
 function TransactionCard({ transaction, setShowTransactionForm, setShowConfirmDeleteDialog }) {
     const navigate = useNavigate();

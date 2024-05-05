@@ -23,6 +23,8 @@ function TransactionList() {
     const filteredTransactionList = transactionList.filter(
         (transaction) => new Date(transaction.date) > new Date()
     );
+
+
     const slicedTransactionList = transactionList.slice(0, 4);
     return (
         <Container>
