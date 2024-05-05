@@ -3,10 +3,10 @@ import { TransactionContext } from "./TransactionContext";
 import Button from "react-bootstrap/esm/Button.js";
 import { useNavigate } from "react-router-dom";
 
-import TransactionDateTimeBadge from "./TransactionDateBadge";
+import TransactionDateTimeBadge from "./TransactionDateTimeBadge";
 
 import Icon from "@mdi/react";
-import { mdiPencil } from "@mdi/js";
+import { mdiPencil , mdiEyeOutline} from "@mdi/js";
 
 function TransactionRoute({ setShowTransactionForm }) {
     const navigate = useNavigate();
@@ -25,6 +25,12 @@ function TransactionRoute({ setShowTransactionForm }) {
                             alignItems: "center",
                         }}
                     >
+                        <Button
+                            onClick={() => navigate("/transactionDetail?id=" + transaction.id)}
+                            size={"sm"}
+                        >
+                            <Icon path={mdiEyeOutline} size={0.7} />
+                        </Button>
                         <Button onClick={() => setShowTransactionForm(transaction)} size={"sm"}>
                             <Icon path={mdiPencil} size={0.7} />
                         </Button>

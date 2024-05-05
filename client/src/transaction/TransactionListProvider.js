@@ -20,6 +20,7 @@ function TransactionListProvider({ children }) {
         const responseJson = await response.json();
         if (response.status < 400) {
             setTransactionLoadObject({ state: "ready", data: responseJson });
+            console.log(responseJson);
             return responseJson;
         } else {
             setTransactionLoadObject((current) => ({
@@ -32,6 +33,8 @@ function TransactionListProvider({ children }) {
     }
 
     async function handleCreate(dtoIn) {
+        console.log('Input data:', dtoIn);
+
         setTransactionLoadObject((current) => ({ ...current, state: "pending" }));
         const response = await fetch(`http://localhost:8000/transaction/create`, {
             method: "POST",

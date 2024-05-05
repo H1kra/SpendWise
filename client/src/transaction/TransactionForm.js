@@ -1,5 +1,5 @@
 import { useContext, useState } from "react";
-import {TransactionListContext} from "./TransactionListContext.js";
+import { TransactionListContext } from "./TransactionListContext.js";
 
 import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
@@ -21,7 +21,7 @@ function TransactionForm({ setShowTransactionForm, transaction }) {
                 onSubmit={async (e) => {
                     e.preventDefault();
                     e.stopPropagation();
-                    var formData = Object.fromEntries(new FormData(e.target));
+                    let formData = Object.fromEntries(new FormData(e.target));
                     formData.date = new Date(formData.date).toISOString();
                     try {
                         if (transaction.id) {
@@ -51,7 +51,7 @@ function TransactionForm({ setShowTransactionForm, transaction }) {
                         dismissible
                         onClose={() => setShowAlert(null)}
                     >
-                        <Alert.Heading>Nepodařilo se vytvořit událost</Alert.Heading>
+                        <Alert.Heading>Nepodařilo se vytvořit transakci</Alert.Heading>
                         <pre>{showAlert}</pre>
                     </Alert>
 
@@ -62,7 +62,37 @@ function TransactionForm({ setShowTransactionForm, transaction }) {
                     ) : null}
 
                     <Form.Group className="mb-3" controlId="formBasicEmail">
-                        <Form.Label>Datum konání</Form.Label>
+                        <Form.Label>Label: </Form.Label>
+                        <Form.Control
+                            type="text"
+                            name="label"
+                            required
+                            defaultValue={transaction.label}
+                        />
+                    </Form.Group>
+                    <Form.Group className="mb-3" controlId="formBasicEmail">
+                        <Form.Label>amount: </Form.Label>
+                        <Form.Control
+                            type="num"
+                            step="0.01"
+                            name="amount"
+                            required
+                            defaultValue={transaction.amount}
+                        />
+                    </Form.Group>
+                    <Form.Group className="mb-3" controlId="formBasicEmail">
+                        <Form.Label>Type: </Form.Label>
+                        <Form.Select
+                            name="type"
+                            required
+                            defaultValue={transaction.type}
+                        >
+                            <option value="expense">Expense</option>
+                            <option value="income">Income</option>
+                        </Form.Select>
+                    </Form.Group>
+                    <Form.Group className="mb-3" controlId="formBasicEmail">
+                        <Form.Label>Datum: </Form.Label>
                         <Form.Control
                             type="datetime-local"
                             name="date"
@@ -73,12 +103,11 @@ function TransactionForm({ setShowTransactionForm, transaction }) {
                         />
                     </Form.Group>
                     <Form.Group className="mb-3" controlId="formBasicEmail">
-                        <Form.Label>Název událost</Form.Label>
+                        <Form.Label>Note: </Form.Label>
                         <Form.Control
                             type="text"
-                            name="name"
-                            required
-                            defaultValue={transaction.name}
+                            name="note"
+                            defaultValue={transaction.note}
                         />
                     </Form.Group>
                 </Modal.Body>

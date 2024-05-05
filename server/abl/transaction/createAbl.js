@@ -14,13 +14,15 @@ const schema = {
     date: { type: "string", format: "date-time" },
     note: { type: "string"},
   },
-  required: ["userId","label", "amount", "type", "date"],
+  required: ["label", "amount", "type", "date"],
   additionalProperties: false,
 };
 
 async function CreateAbl(req, res) {
   try {
     let transaction = req.body;
+
+    transaction.amount = parseFloat(transaction.amount);
 
     // validate input
     const valid = ajv.validate(schema, transaction);

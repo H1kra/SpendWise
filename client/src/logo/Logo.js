@@ -12,7 +12,7 @@ function LogoImg() {
     )
 }
 function swlogo() {
-    return {position: "absolute",display: "flex", width: "300px" };
+    return {position: "relative",display: "flex", width: "300px" };
 }
 
 export default LogoImg;

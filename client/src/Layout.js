@@ -7,8 +7,10 @@ import LogoImg from "./logo/Logo";
 const Layout = () => {
     return (
         <>
-            <LogoImg/>
-            <NavBar/>
+            <div style={navStyle()}>
+                <LogoImg/>
+                <NavBar/>
+            </div>
             <div style={bodyStyle()}>
                 <Outlet />
             </div>
@@ -18,6 +20,13 @@ const Layout = () => {
         </>
     );
 };
+
+function navStyle() {
+    return {
+        width: "100%",
+        height: "13%",
+    }
+}
 
 function bodyStyle() {
     return {

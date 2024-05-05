@@ -1,12 +1,12 @@
-import React from 'react';
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+
 import UserProvider from "./user/UserProvider";
 import Layout from "./Layout";
-import TransactionList from "./transactions/TransactionList";
+import TransactionList from "./transaction/TransactionList";
+import TransactionListProvider from "./transaction/TransactionListProvider";
+import TransactionProvider from "./transaction/TransactionProvider";
+import TransactionRoute from "./transaction/TransactionRoute";
 
-import TransactionListProvider from "./transactions/TransactionListProvider";
-import TransactionProvider from "./transactions/TransactionProvider";
-import TransactionRoute from "./transactions/TransactionRoute";
 
 function App() {
     return (
@@ -18,7 +18,7 @@ function App() {
                             <Route path="/" element={<Layout />}>
                                 <Route index element={<TransactionList />} />
                                 <Route
-                                    path="eventDetail"
+                                    path="transactionDetail"
                                     element={
                                         <TransactionProvider>
                                             <TransactionRoute />
@@ -41,7 +41,7 @@ function componentStyle() {
         display: "flex",
         flexDirection: "column",
         overflow: "hidden",
-        backgroundColor: "#187bcd",
+        backgroundColor: "white",
     };
 }
 
