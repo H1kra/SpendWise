@@ -1,5 +1,6 @@
 import { useContext, useState } from "react";
 import { TransactionListContext } from "./TransactionListContext.js";
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";

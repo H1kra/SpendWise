@@ -18,6 +18,7 @@ export const SideBarData = [
     },
     {
         title: 'Add Transaction',
+        path: "#",
         icon: <Icon path={mdiPlusBox} size={1} />,
         cname: "nav-text",
     },

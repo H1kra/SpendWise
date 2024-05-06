@@ -6,6 +6,7 @@ import TransactionList from "./transaction/TransactionList";
 import TransactionListProvider from "./transaction/TransactionListProvider";
 import TransactionProvider from "./transaction/TransactionProvider";
 import TransactionRoute from "./transaction/TransactionRoute";
+import TransactionForm from "./transaction/TransactionForm";
 
 
 function App() {
@@ -25,6 +26,7 @@ function App() {
                                         </TransactionProvider>
                                     }
                                 />
+                                <Route path="/transactionForm" element={<TransactionForm />} />
                                 <Route path="*" element={"not found"} />
                             </Route>
                         </Routes>

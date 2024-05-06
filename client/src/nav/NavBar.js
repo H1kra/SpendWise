@@ -13,30 +13,38 @@ import {mdiLogout} from "@mdi/js";
 import { mdiAccount } from '@mdi/js';
 import { mdiMenu } from '@mdi/js';
 import { mdiWindowClose } from '@mdi/js';
+import TransactionForm from "../transaction/TransactionForm";
 
 function NavBar() {
     const { userList, loggedInUser, handlerMap } = useContext(UserContext);
     const [ sidebar, setSidebar ] = useState(false);
     const [dropdownOpen, setDropdownOpen] = useState(false);
+    const [showTransactionForm, setShowTransactionForm] = useState(false);
 
     const showSidebar = () => setSidebar(!sidebar);
     const toggleDropdown = () => setDropdownOpen(!dropdownOpen);
-
+    function onClicked(){
+        showSidebar();
+        setShowTransactionForm({});
+    }
     return (
         <>
-            <div className="navbar">
-                <Link to="#" className="menu-bars" >
-                    <Icon path={mdiMenu} size={1} onClick={showSidebar}/>
+            {!!showTransactionForm ? (
+                <TransactionForm transaction={showTransactionForm} setShowTransactionForm={setShowTransactionForm} />
+            ) : null}
+            <div className="mynavbar">
+                <Link to="#" className="mymenu-bars" >
+                    <Icon path={mdiMenu} size={1} onClick={showSidebar} style={{color: "black"}}/>
                 </Link>
             </div>
-            <nav className={sidebar ? "nav-menu active" : "nav-menu"}>
-                <ul className="nav-menu-items">
-                    <div className="navbar-toggle" >
-                        <Link to="#" className="menu-bars" >
-                            <Icon path={mdiWindowClose} size={1} onClick={showSidebar}/>
+            <nav className={sidebar ? "mynav-menu active" : "mynav-menu"}>
+                <ul className="mynav-menu-items">
+                    <div className="mynavbar-toggle" >
+                        <Link to="#" className="mymenu-bars" >
+                            <Icon path={mdiWindowClose} size={1} onClick={showSidebar} style={{color: "black"}}/>
                         </Link>
                     </div>
-                    <div className="user-login">
+                    <div className="myuser-login">
                                     <NavDropdown
                                         title={loggedInUser ? loggedInUser.name : <Icon path={mdiAccount} size={1} />}
                                         show={dropdownOpen}
@@ -48,7 +56,8 @@ function NavBar() {
                     </div>
                         {SideBarData.map((item, index) => {
                             return (
-                                <li key={index} className={item.cname} onClick={showSidebar}>
+                                <li key={index} className={item.cname}
+                                    onClick={item.title === "Add Transaction" ? onClicked : showSidebar}>
                                     <Link to={item.path}>
                                         {item.icon}
                                         <span>{item.title}</span>
@@ -63,7 +72,7 @@ function NavBar() {
 }
 
 
-function getUserMenuList({ userList, loggedInUser, handlerMap }) {
+function getUserMenuList({userList, loggedInUser, handlerMap}) {
     // temporary solution to enable login/logout
     const userMenuItemList = userList.map((user) => (
         <NavDropdown.Item key={user.id} onClick={() => handlerMap.login(user.id)}>
@@ -86,5 +95,6 @@ function getUserMenuList({ userList, loggedInUser, handlerMap }) {
 
     return userMenuItemList;
 }
+
 
 export default NavBar;
