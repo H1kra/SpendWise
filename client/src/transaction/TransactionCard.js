@@ -12,7 +12,7 @@ function TransactionCard({ transaction, setShowTransactionForm, setShowConfirmDe
 
     return (
         <div className="card border-0 shadow rounded" style={componentStyle()}>
-            <TransactionDateTimeBadge transaction={transaction} />
+            <TransactionDateTimeBadge transaction={transaction}/>
             <TransactionDetail transaction={transaction} />
             <div
                 style={{
@@ -22,20 +22,28 @@ function TransactionCard({ transaction, setShowTransactionForm, setShowConfirmDe
                     alignItems: "center",
                 }}
             >
-                <Button onClick={() => setShowTransactionForm(transaction)} size={"sm"}>
+                <Button onClick={() => setShowTransactionForm(transaction)} size={"sm"} style={buttonStyle()}>
                     <Icon path={mdiPencil} size={0.7} />
                 </Button>
                 <Button
                     onClick={() => setShowConfirmDeleteDialog(transaction)}
                     size={"sm"}
                     variant="danger"
+                    style={buttonStyle()}
                 >
                     <Icon path={mdiTrashCanOutline} size={0.7} />
                 </Button>
-
             </div>
         </div>
     );
+}
+
+function buttonStyle(){
+    return {
+        color: "black",
+        backgroundColor: "lightgrey",
+        border: "solid black 1px"
+    }
 }
 
 function componentStyle() {
@@ -47,7 +55,8 @@ function componentStyle() {
         columnGap: "8px",
         maxWidth: "640px",
         border: "solid black 1px",
-        borderRadius: "5px"
+        borderRadius: "5px",
+        overflow: "hidden"
     };
 }
 

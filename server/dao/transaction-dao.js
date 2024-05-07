@@ -57,7 +57,7 @@ function remove(transactionId) {
 }
 
 // Method to list events in a folder
-function list() {
+function list(userId) {
   try {
     const files = fs.readdirSync(transactionFolderPath);
     const transactionList = files.map((file) => {
@@ -67,6 +67,7 @@ function list() {
       );
       return JSON.parse(fileData);
     });
+
     transactionList.sort((a, b) => new Date(a.date) - new Date(b.date));
     return transactionList;
   } catch (error) {
