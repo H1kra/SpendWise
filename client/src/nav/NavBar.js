@@ -46,7 +46,7 @@ function NavBar() {
                     </div>
                     <div className="myuser-login">
                                     <NavDropdown
-                                        title={loggedInUser ? loggedInUser.name : <Icon path={mdiAccount} size={1} />}
+                                        title={loggedInUser ? "Welcome " + loggedInUser.name : <Icon path={mdiAccount} size={1} />}
                                         show={dropdownOpen}
                                         onClick={toggleDropdown}
                                         drop={"start"}

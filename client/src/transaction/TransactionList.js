@@ -10,6 +10,7 @@ import Container from "react-bootstrap/esm/Container.js";
 
 import ConfirmDeleteDialog from "./ConfirmDeleteDialog.js";
 import {useNavigate} from "react-router-dom";
+import {UserContext} from "../user/UserContext";
 
 function TransactionList() {
     const { transactionList } = useContext(TransactionListContext);
@@ -25,6 +26,7 @@ function TransactionList() {
     );
 
     const slicedTransactionList = transactionList.slice(0, 4);
+    const { loggedInUser } = useContext(UserContext);
 
     return (
         <Container>
@@ -48,12 +50,13 @@ function TransactionList() {
                 );
             })}
             <div style={{ display: 'flex', justifyContent: 'center' }}>
-                <Button
-                    onClick={() => navigate("/")}
-                    size={"sm"}
-                >
-                    <label>See More</label>
-                </Button>
+                {!loggedInUser ? (
+                    <a>Please log-in</a>
+                ) : (
+                    <Button size="sm">
+                        <label>See More</label>
+                    </Button>
+                )}
             </div>
         </Container>
     );
