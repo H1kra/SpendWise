@@ -30,12 +30,14 @@ function navStyle() {
 
 function bodyStyle() {
     return {
+        height: "auto",
         overflow: "auto",
         padding: "0px",
         margin : "0px",
         flex: "1",
         borderTop: "white 4px solid",
         borderBottom: "white 4px solid",
+
     };
 }
 

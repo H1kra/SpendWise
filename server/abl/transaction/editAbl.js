@@ -24,6 +24,8 @@ async function EditAbl(req, res) {
   try {
     let transaction = req.body;
 
+    transaction.amount = parseFloat(transaction.amount);
+
     // validate input
     const valid = ajv.validate(schema, transaction);
     if (!valid) {

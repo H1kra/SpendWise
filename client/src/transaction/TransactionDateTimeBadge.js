@@ -17,7 +17,7 @@ function TransactionDateTimeBadge({ transaction }) {
 function componentStyle() {
     return {
         width: "88px",
-        backgroundColor: "#d63232",
+        backgroundColor: "lightgrey",
         display: "grid",
         height: "max-content",
     };
@@ -30,7 +30,7 @@ function dateStyle() {
         gap: "4px",
         padding: "8px",
         fontSize: "22px",
-        color: "white",
+        color: "black",
         lineHeight: 1,
     };
 }
@@ -42,8 +42,8 @@ function timeStyle() {
         fontSize: "20px",
         lineHeight: 1,
         padding: "4px 4px 8px 4px",
-        background: "#187bcd",
-        color: "white",
+        background: "white",
+        color: "black",
     };
 }
 

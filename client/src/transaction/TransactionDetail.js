@@ -15,6 +15,7 @@ function TransactionDetail({ transaction }) {
 
     function RecordStyle() {
         return {
+            overflow: "hidden",
             position: "relative",
             fontSize: "22px",
             display: "flex",

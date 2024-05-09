@@ -2,7 +2,7 @@
     margin: 0;
     padding: 0;
 }
-.navbar{
+.mynavbar{
     margin-right: 3%;
     margin-top: 3%;
     position: fixed;
@@ -15,12 +15,12 @@
     right: 0;
 
 }
-.menu-bars {
+.mymenu-bars {
     font-size: 2rem;
     background: none;
 }
 
-.nav-menu {
+.mynav-menu {
     background-color: #ffff;
     display: flex;
     width: 250px;
@@ -30,9 +30,10 @@
     right: -100%;
     transition: 650ms;
     border-left: solid lightgrey 1px;
+    z-index: 1000;
 }
 
-.nav-menu.active {
+.mynav-menu.active {
     right: 0;
     transition: 350ms;
 }
@@ -62,11 +63,13 @@
    background-color: grey;
 }
 
-.nav-menu-items {
+.mynav-menu-items {
     width: 100%;
+    margin: 0;
+    padding: 0;
 }
 
-.navbar-toggle {
+.mynavbar-toggle {
     position: relative;
     float: right;
     width: 40px;
@@ -75,7 +78,7 @@
     align-items: start;
 }
 
-.user-login {
+.myuser-login{
     width: 40px;
     height: 40px;
     display: flex;
