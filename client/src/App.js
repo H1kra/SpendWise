@@ -19,6 +19,10 @@ function App() {
                             <Route path="/" element={<Layout />}>
                                 <Route index element={<TransactionList />} />
                                 <Route
+                                    path="TranList"
+                                    element={<TransactionList />}
+                                />
+                                <Route
                                     path="transactionDetail"
                                     element={
                                         <TransactionProvider>

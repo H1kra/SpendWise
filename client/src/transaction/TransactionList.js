@@ -9,7 +9,7 @@ import TransactionCard from "./TransactionCard.js";
 import Container from "react-bootstrap/esm/Container.js";
 
 import ConfirmDeleteDialog from "./ConfirmDeleteDialog.js";
-import {useNavigate} from "react-router-dom";
+import {useNavigate, useLocation} from "react-router-dom";
 import {UserContext} from "../user/UserContext";
 
 function TransactionList() {
@@ -17,21 +17,22 @@ function TransactionList() {
     const [showTransactionForm, setShowTransactionForm] = useState(false);
     const [showConfirmDeleteDialog, setShowConfirmDeleteDialog] = useState(false);
     const navigate = useNavigate();
-
-    console.log("showTransactionForm:", showTransactionForm);
-
-    // nefunkcni
-    const filteredTransactionList = transactionList.filter(
-        (transaction) => new Date(transaction.date) > new Date()
-    );
-
-    const slicedTransactionList = transactionList.slice(0, 4);
+    const location = useLocation();
     const { loggedInUser } = useContext(UserContext);
+
+    let filteredTransactionList = transactionList;
+
+    if (location.pathname === "/TranList") {
+        filteredTransactionList = transactionList
+    } else {
+        // Slice the transaction list
+        filteredTransactionList = transactionList.slice(0, 4);
+    }
 
     return (
         <Container>
-                {!!showTransactionForm ? (
-                <TransactionForm transaction={showTransactionForm} setShowTransactionForm={setShowTransactionForm} />
+            {!!showTransactionForm ? (
+                <TransactionForm transaction={showTransactionForm} setShowTransactionForm={setShowTransactionForm}/>
             ) : null}
             {!!showConfirmDeleteDialog ? (
                 <ConfirmDeleteDialog
@@ -39,7 +40,7 @@ function TransactionList() {
                     setShowConfirmDeleteDialog={setShowConfirmDeleteDialog}
                 />
             ) : null}
-            {slicedTransactionList.map((transaction) => {
+            {filteredTransactionList.map((transaction) => {
                 return (
                     <TransactionCard
                         key={transaction.id}
@@ -49,13 +50,19 @@ function TransactionList() {
                     />
                 );
             })}
-            <div style={{ display: 'flex', justifyContent: 'center' }}>
+            <div style={{display: 'flex', justifyContent: 'center'}}>
                 {!loggedInUser ? (
                     <a>Please log-in</a>
                 ) : (
-                    <Button size="sm">
-                        <label>See More</label>
-                    </Button>
+                    location.pathname === "/TranList" ? (
+                        <Button size="sm">
+                            <label>See more</label>
+                        </Button>
+                    ) : (
+                        <Button size="sm" onClick={() => navigate("/TranList")}>
+                            <label>See More</label>
+                        </Button>
+                    )
                 )}
             </div>
         </Container>
