@@ -15,6 +15,7 @@ import { mdiMenu } from '@mdi/js';
 import { mdiWindowClose } from '@mdi/js';
 import TransactionForm from "../transaction/TransactionForm";
 
+
 function NavBar() {
     const { userList, loggedInUser, handlerMap } = useContext(UserContext);
     const [ sidebar, setSidebar ] = useState(false);
@@ -54,17 +55,20 @@ function NavBar() {
                                         {getUserMenuList({ userList, loggedInUser, handlerMap })}
                                     </NavDropdown>
                     </div>
-                        {SideBarData.map((item, index) => {
-                            return (
-                                <li key={index} className={item.cname}
-                                    onClick={item.title === "Add Transaction" ? onClicked : showSidebar}>
-                                    <Link to={item.path}>
-                                        {item.icon}
-                                        <span>{item.title}</span>
-                                    </Link>
-                                </li>
-                            );
-                        })}
+                        {loggedInUser ? (
+                            SideBarData.map((item, index) => {
+                                return (
+                                    <li key={index} className={item.cname} onClick={item.title === "Add Transaction" ? onClicked : showSidebar}>
+                                        <Link to={item.path}>
+                                            {item.icon}
+                                            <span>{item.title}</span>
+                                        </Link>
+                                    </li>
+                                );
+                            })
+                        ) : (
+                            <li style={{listStyle: "none"}}>please log-in</li>
+                        )}
                 </ul>
             </nav>
         </>

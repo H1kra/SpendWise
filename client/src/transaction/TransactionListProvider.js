@@ -34,7 +34,6 @@ function TransactionListProvider({ children }) {
             const filteredTransactions = responseJson.filter(transaction => transaction.userId === loggedInUser.id);
 
             setTransactionLoadObject({ state: "ready", data: filteredTransactions });
-            console.log(filteredTransactions);
             return filteredTransactions;
         } else {
             setTransactionLoadObject((current) => ({

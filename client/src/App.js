@@ -17,7 +17,7 @@ function App() {
                     <BrowserRouter>
                         <Routes>
                             <Route path="/" element={<Layout />}>
-                                <Route index element={<TransactionList />} />
+                                <Route index element={<TransactionList/>} />
                                 <Route
                                     path="TranList"
                                     element={<TransactionList />}

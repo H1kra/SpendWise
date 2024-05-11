@@ -19,11 +19,16 @@ function TransactionList() {
     const navigate = useNavigate();
     const location = useLocation();
     const { loggedInUser } = useContext(UserContext);
+    const [i, setI] = useState(8);
 
     let filteredTransactionList = transactionList;
 
+    const getMore = () => {
+        setI(prevI => prevI + 4); // Incrementing i by 4 when the button is clicked
+    };
+
     if (location.pathname === "/TranList") {
-        filteredTransactionList = transactionList
+        filteredTransactionList = transactionList.slice(0,i)
     } else {
         // Slice the transaction list
         filteredTransactionList = transactionList.slice(0, 4);
@@ -52,10 +57,10 @@ function TransactionList() {
             })}
             <div style={{display: 'flex', justifyContent: 'center'}}>
                 {!loggedInUser ? (
-                    <a>Please log-in</a>
+                    <p>Please log-in</p>
                 ) : (
                     location.pathname === "/TranList" ? (
-                        <Button size="sm">
+                        <Button size="sm" onClick={getMore}>
                             <label>See more</label>
                         </Button>
                     ) : (
