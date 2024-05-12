@@ -22,14 +22,6 @@ function App() {
                                     path="TranList"
                                     element={<TransactionList />}
                                 />
-                                <Route
-                                    path="transactionDetail"
-                                    element={
-                                        <TransactionProvider>
-                                            <TransactionRoute />
-                                        </TransactionProvider>
-                                    }
-                                />
                                 <Route path="/transactionForm" element={<TransactionForm />} />
                                 <Route path="*" element={"not found"} />
                             </Route>
