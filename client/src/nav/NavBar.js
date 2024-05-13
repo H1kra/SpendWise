@@ -21,6 +21,7 @@ function NavBar() {
     const [ sidebar, setSidebar ] = useState(false);
     const [dropdownOpen, setDropdownOpen] = useState(false);
     const [showTransactionForm, setShowTransactionForm] = useState(false);
+    const [showStandingOrderForm, setShowStandingOrderForm] = useState(false);
 
     const showSidebar = () => setSidebar(!sidebar);
     const toggleDropdown = () => setDropdownOpen(!dropdownOpen);
@@ -28,10 +29,17 @@ function NavBar() {
         showSidebar();
         setShowTransactionForm({});
     }
+    function addStandingOrder(){
+        showSidebar();
+        setShowStandingOrderForm({});
+    }
     return (
         <>
             {!!showTransactionForm ? (
                 <TransactionForm transaction={showTransactionForm} setShowTransactionForm={setShowTransactionForm} />
+            ) : null}
+            {!!showStandingOrderForm ? (
+                <TransactionForm standingOrder={showStandingOrderForm} setShowStandingOrderForm={setShowStandingOrderForm} />
             ) : null}
             <div className="mynavbar">
                 <Link to="#" className="mymenu-bars" >
@@ -58,7 +66,7 @@ function NavBar() {
                         {loggedInUser ? (
                             SideBarData.map((item, index) => {
                                 return (
-                                    <li key={index} className={item.cname} onClick={item.title === "Add Transaction" ? onClicked : showSidebar}>
+                                    <li key={index} className={item.cname} onClick={item.title === "Add Transaction" ? onClicked : (item.title === "Add Standing Order" ? addStandingOrder : showSidebar)}>
                                         <Link to={item.path}>
                                             {item.icon}
                                             <span>{item.title}</span>
