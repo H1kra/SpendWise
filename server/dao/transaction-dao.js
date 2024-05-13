@@ -40,7 +40,7 @@ function edit(transaction) {
     fs.writeFileSync(filePath, fileData, "utf8");
     return newTransaction;
   } catch (error) {
-    throw { code: "failedToUpdateEvent", message: error.message };
+    throw { code: "failedToUpdateTransaction", message: error.message };
   }
 }
 

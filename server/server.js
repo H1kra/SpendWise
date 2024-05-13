@@ -3,6 +3,7 @@ const app = express()
 const cors = require("cors");
 
 const transactionController = require("./controller/transaction");
+const standingOrderController = require("./controller/standingOrder");
 const userController = require("./controller/user");
 
 app.use(express.json()); // podpora pro application/json
@@ -15,6 +16,7 @@ app.get("/", (req, res) => {
 });
 
 app.use("/transaction", transactionController);
+app.use("/standingOrder", standingOrderController)
 app.use("/user", userController);
 
 app.listen(8000,() => {console.log("Started at port 8000")})
