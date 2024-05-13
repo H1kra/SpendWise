@@ -85,7 +85,7 @@ function NavBar() {
 
 
 function getUserMenuList({userList, loggedInUser, handlerMap}) {
-    // temporary solution to enable login/logout
+ g   // temporary solution to enable login/logout
     const userMenuItemList = userList.map((user) => (
         <NavDropdown.Item key={user.id} onClick={() => handlerMap.login(user.id)}>
             <li>{user.name} {user.surename}</li>
