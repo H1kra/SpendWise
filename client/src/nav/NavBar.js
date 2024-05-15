@@ -14,6 +14,7 @@ import { mdiAccount } from '@mdi/js';
 import { mdiMenu } from '@mdi/js';
 import { mdiWindowClose } from '@mdi/js';
 import TransactionForm from "../transaction/TransactionForm";
+import StandingOrderForm from "../standingOrder/StandingOrderForm";
 
 
 function NavBar() {
@@ -25,6 +26,7 @@ function NavBar() {
 
     const showSidebar = () => setSidebar(!sidebar);
     const toggleDropdown = () => setDropdownOpen(!dropdownOpen);
+
     function onClicked(){
         showSidebar();
         setShowTransactionForm({});
@@ -39,7 +41,7 @@ function NavBar() {
                 <TransactionForm transaction={showTransactionForm} setShowTransactionForm={setShowTransactionForm} />
             ) : null}
             {!!showStandingOrderForm ? (
-                <TransactionForm standingOrder={showStandingOrderForm} setShowStandingOrderForm={setShowStandingOrderForm} />
+                <StandingOrderForm standingOrder={showStandingOrderForm} setShowStandingOrderForm={setShowStandingOrderForm} />
             ) : null}
             <div className="mynavbar">
                 <Link to="#" className="mymenu-bars" >

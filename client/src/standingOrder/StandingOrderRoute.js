@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { StandingOrderContext } from "./StandingOrderContext";
+import { StandingOrderContext } from "./StandingOrderListContext";
 import Button from "react-bootstrap/esm/Button.js";
 import { useNavigate } from "react-router-dom";
 
@@ -14,7 +14,7 @@ function StandingOrderRoute({ setShowStandingOrderForm }) {
 
     return (
         <div className="card border-0 shadow rounded" style={componentStyle()}>
-            {transaction ? (
+            {standingOrder ? (
                 <>
                     <StandingOrderDateTimeBadge standingOrder={standingOrder} />
                     <div
@@ -26,7 +26,7 @@ function StandingOrderRoute({ setShowStandingOrderForm }) {
                         }}
                     >
                         <Button
-                            onClick={() => navigate("/standingOrderDetail?id=" + StandingOrder.id)}
+                            onClick={() => navigate("/standingOrderDetail?id=" + standingOrder.id)}
                             size={"sm"}
                         >
                             <Icon path={mdiEyeOutline} size={0.7} />

@@ -13,7 +13,7 @@ function TransactionListProvider({ children }) {
     const { loggedInUser } = useContext(UserContext);
 
     useEffect(() => {
-        handleLoad();
+        handleLoad()
     }, [loggedInUser]);
 
     async function handleLoad() {

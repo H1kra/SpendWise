@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import {useContext, useEffect, useState} from "react";
 import { StandingOrderListContext } from "./StandingOrderListContext.js";
 
 
@@ -16,22 +16,24 @@ function StandingOrderList() {
     const { standingOrderList } = useContext(StandingOrderListContext);
     const [showStandingOrderForm, setShowStandingOrderForm] = useState(false);
     const [showConfirmDeleteDialog, setShowConfirmDeleteDialog] = useState(false);
+    const [filteredStandingOrderList, setFilteredStandingOrderList] = useState([])
     const navigate = useNavigate();
     const location = useLocation();
     const { loggedInUser } = useContext(UserContext);
     const [i, setI] = useState(8);
 
-    let filteredStandingOrderList = standingOrderList;
 
     const getMore = () => {
         setI(prevI => prevI + 4); // Incrementing i by 4 when the button is clicked
     };
 
-    if (location.pathname === "/standingOrders") {
-        filteredStandingOrderList = standingOrderList.slice(0,i)
-    } else {
-        filteredStandingOrderList = standingOrderList.slice(0, 4);
-    }
+    useEffect(() => {
+        if (location.pathname === "/TranList") {
+            setFilteredStandingOrderList(standingOrderList.slice(0, i));
+        } else {
+            setFilteredStandingOrderList(standingOrderList.slice(0, 4));
+        }
+    }, [location.pathname, standingOrderList, i]);
 
     return (
         <Container>

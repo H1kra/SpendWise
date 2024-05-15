@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import {useContext, useEffect, useState} from "react";
 import { TransactionListContext } from "./TransactionListContext.js";
 
 
@@ -16,23 +16,26 @@ function TransactionList() {
     const { transactionList } = useContext(TransactionListContext);
     const [showTransactionForm, setShowTransactionForm] = useState(false);
     const [showConfirmDeleteDialog, setShowConfirmDeleteDialog] = useState(false);
+    const [filteredTransactionList, setFilteredTransactionList] = useState([])
     const navigate = useNavigate();
     const location = useLocation();
     const { loggedInUser } = useContext(UserContext);
-    const [i, setI] = useState(8);
+    const [i, setI] = useState(5);
 
-    let filteredTransactionList = transactionList;
+
 
     const getMore = () => {
         setI(prevI => prevI + 4); // Incrementing i by 4 when the button is clicked
     };
 
-    if (location.pathname === "/TranList") {
-        filteredTransactionList = transactionList.slice(0,i)
-    } else {
-        // Slice the transaction list
-        filteredTransactionList = transactionList.slice(0, 4);
-    }
+    useEffect(() => {
+        if (location.pathname === "/TranList") {
+            setFilteredTransactionList(transactionList.slice(0, i));
+        } else {
+            setFilteredTransactionList(transactionList.slice(0, 4));
+        }
+    }, [location.pathname, transactionList, i]);
+
 
     return (
         <Container>
