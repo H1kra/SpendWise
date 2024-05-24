@@ -33,7 +33,15 @@ function TransactionListProvider({ children }) {
         if (response.status < 400) {
             const filteredTransactions = responseJson.filter(transaction => transaction.userId === loggedInUser.id);
 
-            setTransactionLoadObject({ state: "ready", data: filteredTransactions });
+            const combinedTransactions = [
+                ...transactionLoadObject.data || [], // Existing transactions
+                ...filteredTransactions // Newly loaded transactions
+            ];
+
+            // Sort the combined transactions
+            combinedTransactions.sort((a, b) => new Date(b.date) - new Date(a.date));
+
+            setTransactionLoadObject({ state: "ready", data: combinedTransactions });
             return filteredTransactions;
         } else {
             setTransactionLoadObject((current) => ({
@@ -63,7 +71,7 @@ function TransactionListProvider({ children }) {
             if (response.status < 400) {
                 setTransactionLoadObject((current) => {
                     current.data.push(responseJson);
-                    current.data.sort((a, b) => new Date(a.date) - new Date(b.date));
+                    current.data.sort((a, b) => new Date(b.date) - new Date(a.date));
                     return {state: "ready", data: current.data};
                 });
                 return responseJson;
@@ -93,7 +101,7 @@ function TransactionListProvider({ children }) {
                     (e) => e.id === responseJson.id
                 );
                 current.data[transactionIndex] = responseJson;
-                current.data.sort((a, b) => new Date(a.date) - new Date(b.date));
+                current.data.sort((a, b) => new Date(b.date) - new Date(a.date));
                 return { state: "ready", data: current.data };
             });
             return responseJson;
@@ -117,13 +125,10 @@ function TransactionListProvider({ children }) {
         const responseJson = await response.json();
 
         if (response.status < 400) {
-            setTransactionLoadObject((current) => {
-                const transactionIndex = current.data.findIndex(
-                    (e) => e.id === responseJson.id
-                );
-                current.data.splice(transactionIndex, 1);
-                return { state: "ready", data: current.data };
-            });
+            setTransactionLoadObject((current) => ({
+                state: "ready",
+                data: current.data.filter(transaction => transaction.id !== dtoIn.id),
+            }));
             return responseJson;
         } else {
             setTransactionLoadObject((current) => ({

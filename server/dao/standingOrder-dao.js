@@ -57,7 +57,7 @@ function remove(standingOrderId) {
 }
 
 // Method to list events in a folder
-function list(userId) {
+function list() {
   try {
     const files = fs.readdirSync(standingOrderFolderPath);
     const standingOrderList = files.map((file) => {
@@ -68,7 +68,7 @@ function list(userId) {
       return JSON.parse(fileData);
     });
 
-    standingOrderList.sort((a, b) => new Date(a.date) - new Date(b.date));
+    standingOrderList.sort((a, b) => new Date(b.date) - new Date(a.date));
     return standingOrderList;
   } catch (error) {
     throw { code: "failedToListStandingOrder", message: error.message };

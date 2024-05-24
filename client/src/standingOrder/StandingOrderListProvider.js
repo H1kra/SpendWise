@@ -34,7 +34,15 @@ function StandingOrderListProvider({ children }) {
         if (response.status < 400) {
             const filteredStandingOrders = responseJson.filter(standingOrder => standingOrder.userId === loggedInUser.id);
 
-            setStandingOrderLoadObject({ state: "ready", data: filteredStandingOrders });
+            const combinedStandingOrders = [
+                ...standingOrderLoadObject.data || [], // Existing transactions
+                ...filteredStandingOrders // Newly loaded transactions
+            ];
+
+            // Sort the combined transactions
+            combinedStandingOrders.sort((a, b) => new Date(b.date) - new Date(a.date));
+
+            setStandingOrderLoadObject({ state: "ready", data: combinedStandingOrders });
             return filteredStandingOrders;
         } else {
             setStandingOrderLoadObject((current) => ({
@@ -64,7 +72,7 @@ function StandingOrderListProvider({ children }) {
             if (response.status < 400) {
                 setStandingOrderLoadObject((current) => {
                     current.data.push(responseJson);
-                    current.data.sort((a, b) => new Date(a.date) - new Date(b.date));
+                    current.data.sort((a, b) => new Date(b.date) - new Date(a.date));
                     return {state: "ready", data: current.data};
                 });
                 return responseJson;
@@ -94,7 +102,7 @@ function StandingOrderListProvider({ children }) {
                     (e) => e.id === responseJson.id
                 );
                 current.data[standingOrderIndex] = responseJson;
-                current.data.sort((a, b) => new Date(a.date) - new Date(b.date));
+                current.data.sort((a, b) => new Date(b.date) - new Date(a.date));
                 return { state: "ready", data: current.data };
             });
             return responseJson;
@@ -118,13 +126,10 @@ function StandingOrderListProvider({ children }) {
         const responseJson = await response.json();
 
         if (response.status < 400) {
-            setStandingOrderLoadObject((current) => {
-                const standingOrderIndex = current.data.findIndex(
-                    (e) => e.id === responseJson.id
-                );
-                current.data.splice(standingOrderIndex, 1);
-                return { state: "ready", data: current.data };
-            });
+            setStandingOrderLoadObject((current) => ({
+                state: "ready",
+                data: current.data.filter(standingOrder => standingOrder.id !== dtoIn.id),
+            }));
             return responseJson;
         } else {
             setStandingOrderLoadObject((current) => ({

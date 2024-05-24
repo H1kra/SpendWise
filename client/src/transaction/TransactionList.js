@@ -13,7 +13,7 @@ import {useNavigate, useLocation} from "react-router-dom";
 import {UserContext} from "../user/UserContext";
 
 function TransactionList() {
-    const { transactionList } = useContext(TransactionListContext);
+    const { transactionList, handlerMap } = useContext(TransactionListContext);
     const [showTransactionForm, setShowTransactionForm] = useState(false);
     const [showConfirmDeleteDialog, setShowConfirmDeleteDialog] = useState(false);
     const [filteredTransactionList, setFilteredTransactionList] = useState([])
@@ -46,6 +46,7 @@ function TransactionList() {
                 <ConfirmDeleteDialog
                     transaction={showConfirmDeleteDialog}
                     setShowConfirmDeleteDialog={setShowConfirmDeleteDialog}
+                    onDelete={() => handlerMap.handleDelete(showConfirmDeleteDialog.id)}
                 />
             ) : null}
             {filteredTransactionList.map((transaction) => {

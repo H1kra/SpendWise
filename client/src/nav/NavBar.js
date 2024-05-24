@@ -27,14 +27,27 @@ function NavBar() {
     const showSidebar = () => setSidebar(!sidebar);
     const toggleDropdown = () => setDropdownOpen(!dropdownOpen);
 
-    function onClicked(){
-        showSidebar();
-        setShowTransactionForm({});
+    function onClicked() {
+        if (loggedInUser) {
+            showSidebar();
+            setShowTransactionForm({});
+        }
     }
-    function addStandingOrder(){
-        showSidebar();
-        setShowStandingOrderForm({});
+
+    function addStandingOrder() {
+        if (loggedInUser) {
+            showSidebar();
+            setShowStandingOrderForm({});
+        }
     }
+
+    const handleItemClick = (event, itemAction) => {
+        if (!loggedInUser) {
+            event.preventDefault();
+            return;
+        }
+        itemAction();
+    };
     return (
         <>
             {!!showTransactionForm ? (
@@ -77,7 +90,19 @@ function NavBar() {
                                 );
                             })
                         ) : (
-                            <li style={{listStyle: "none"}}>please log-in</li>
+                            SideBarData.map((item, index) => {
+                                return (
+                                    <li
+                                        key={index} className={item.cname}
+                                        onClick={item.title === "Add Transaction" ? onClicked : (item.title === "Add Standing Order" ? addStandingOrder : showSidebar)}
+                                    >
+                                        <Link to={item.path} style={{color: 'gray', cursor: 'not-allowed'}}>
+                                            {item.icon}
+                                            <span>{item.title}</span>
+                                        </Link>
+                                    </li>
+                                );
+                            })
                         )}
                 </ul>
             </nav>

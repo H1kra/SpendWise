@@ -38,6 +38,7 @@ function edit(transaction) {
     const filePath = path.join(transactionFolderPath, `${transaction.id}.json`);
     const fileData = JSON.stringify(newTransaction);
     fs.writeFileSync(filePath, fileData, "utf8");
+
     return newTransaction;
   } catch (error) {
     throw { code: "failedToUpdateTransaction", message: error.message };
@@ -57,7 +58,7 @@ function remove(transactionId) {
 }
 
 // Method to list events in a folder
-function list(userId) {
+function list() {
   try {
     const files = fs.readdirSync(transactionFolderPath);
     const transactionList = files.map((file) => {
@@ -67,8 +68,6 @@ function list(userId) {
       );
       return JSON.parse(fileData);
     });
-
-    transactionList.sort((a, b) => new Date(a.date) - new Date(b.date));
     return transactionList;
   } catch (error) {
     throw { code: "failedToListTransaction", message: error.message };

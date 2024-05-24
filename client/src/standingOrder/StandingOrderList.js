@@ -13,7 +13,7 @@ import {useNavigate, useLocation} from "react-router-dom";
 import {UserContext} from "../user/UserContext";
 
 function StandingOrderList() {
-    const { standingOrderList } = useContext(StandingOrderListContext);
+    const { standingOrderList, handlerMap } = useContext(StandingOrderListContext);
     const [showStandingOrderForm, setShowStandingOrderForm] = useState(false);
     const [showConfirmDeleteDialog, setShowConfirmDeleteDialog] = useState(false);
     const [filteredStandingOrderList, setFilteredStandingOrderList] = useState([])
@@ -44,6 +44,7 @@ function StandingOrderList() {
                 <ConfirmDeleteDialog
                     standingOrder={showConfirmDeleteDialog}
                     setShowConfirmDeleteDialog={setShowConfirmDeleteDialog}
+                    onDelete={() => handlerMap.handleDelete(showConfirmDeleteDialog.id)}
                 />
             ) : null}
             {filteredStandingOrderList.map((standingOrder) => {
