@@ -67,7 +67,7 @@ function StandingOrderList() {
                         </Button>
                     ) : (
                         <Button size="sm" onClick={() => navigate("/standingOrders")}>
-                            <label>See More</label>
+                            <label>See more</label>
                         </Button>
                     )
                 )}

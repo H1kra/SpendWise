@@ -1,6 +1,9 @@
 const express = require('express')
 const app = express()
 const cors = require("cors");
+const cron = require("node-cron");
+const standingOrderDAO = require("./dao/standingOrder-dao");
+const transactionDAO = require("./dao/transaction-dao");
 
 const transactionController = require("./controller/transaction");
 const standingOrderController = require("./controller/standingOrder");
@@ -18,5 +21,30 @@ app.get("/", (req, res) => {
 app.use("/transaction", transactionController);
 app.use("/standingOrder", standingOrderController)
 app.use("/user", userController);
+
+cron.schedule("55 16 * * *", () => {
+    const today = new Date();
+    const dayOfMonth = today.getDate();
+
+    const standingOrders = standingOrderDAO.list();
+    standingOrders.forEach((order) => {
+        const startDate = new Date(order.startDate);
+        const endDate = new Date(order.endDate);
+        if (
+            today >= startDate && today <= endDate &&
+            dayOfMonth === startDate.getDate()
+        ) {
+            const transaction = {
+                userId: order.userId,
+                label: order.label,
+                amount: order.amount,
+                type: order.type,
+                date: today.toISOString(),
+                note: order.note,
+            };
+            transactionDAO.create(transaction);
+        }
+    });
+});
 
 app.listen(8000,() => {console.log("Started at port 8000")})

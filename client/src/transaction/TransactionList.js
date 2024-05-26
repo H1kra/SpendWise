@@ -25,7 +25,7 @@ function TransactionList() {
 
 
     const getMore = () => {
-        setI(prevI => prevI + 4); // Incrementing i by 4 when the button is clicked
+        setI(prevI => prevI + 4);
     };
 
     useEffect(() => {
@@ -61,7 +61,7 @@ function TransactionList() {
             })}
             <div style={{display: 'flex', justifyContent: 'center'}}>
                 {!loggedInUser ? (
-                    <p>Please log-in</p>
+                    <p style={{fontSize:"50px"}}>Please log-in</p>
                 ) : (
                     location.pathname === "/TranList" ? (
                         <Button size="sm" onClick={getMore}>

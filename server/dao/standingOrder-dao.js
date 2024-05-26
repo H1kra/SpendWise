@@ -3,6 +3,7 @@ const path = require("path");
 const crypto = require("crypto");
 
 const standingOrderFolderPath = path.join(__dirname, "storage", "standingOrderList");
+const transactionFolderPath = path.join(__dirname, "storage", "transactionList");
 
 // Method to read an event from a file
 function get(standingOrderId) {
@@ -74,6 +75,7 @@ function list() {
     throw { code: "failedToListStandingOrder", message: error.message };
   }
 }
+
 
 module.exports = {
   get,
