@@ -41,7 +41,7 @@ function App() {
                                         path="standingOrders"
                                         element={<StandingOrderList />}
                                     />
-                                    <Route path="/standingOrderForm" element={<StandingOrderForm />} />
+                                    <Route path="/standingOrderForm" element={<StandingOrderForm style={{top: "50px"}}/>} />
                                     <Route path="*" element={"not found"} />
                                 </Route>
                             </Routes>

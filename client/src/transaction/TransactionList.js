@@ -20,21 +20,26 @@ function TransactionList() {
     const navigate = useNavigate();
     const location = useLocation();
     const { loggedInUser } = useContext(UserContext);
-    const [i, setI] = useState(5);
+    const [pageSize, setPageSize] = useState(4);
+    const [startIndex, setStartIndex] = useState(0);
 
 
-
-    const getMore = () => {
-        setI(prevI => prevI + 4);
-    };
 
     useEffect(() => {
-        if (location.pathname === "/TranList") {
-            setFilteredTransactionList(transactionList.slice(0, i));
-        } else {
-            setFilteredTransactionList(transactionList.slice(0, 4));
-        }
-    }, [location.pathname, transactionList, i]);
+        // Reset transaction list when user logs out or switches
+        setFilteredTransactionList([]);
+        setPageSize(4); // Reset page size
+        setStartIndex(0); // Reset start index
+    }, [loggedInUser]);
+
+    useEffect(() => {
+        const endIndex = Math.min(startIndex + pageSize, transactionList.length);
+        setFilteredTransactionList(transactionList.slice(startIndex, endIndex));
+    }, [transactionList, startIndex, pageSize]);
+
+    const loadMoreTransactions = () => {
+        setPageSize(prevPageSize => prevPageSize + 4);
+    };
 
 
     return (
@@ -49,31 +54,37 @@ function TransactionList() {
                     onDelete={() => handlerMap.handleDelete(showConfirmDeleteDialog.id)}
                 />
             ) : null}
-            {filteredTransactionList.map((transaction) => {
-                return (
-                    <TransactionCard
-                        key={transaction.id}
-                        transaction={transaction}
-                        setShowTransactionForm={setShowTransactionForm}
-                        setShowConfirmDeleteDialog={setShowConfirmDeleteDialog}
-                    />
-                );
-            })}
-            <div style={{display: 'flex', justifyContent: 'center'}}>
-                {!loggedInUser ? (
-                    <p style={{fontSize:"50px"}}>Please log-in</p>
-                ) : (
-                    location.pathname === "/TranList" ? (
-                        <Button size="sm" onClick={getMore}>
-                            <label>See more</label>
-                        </Button>
-                    ) : (
-                        <Button size="sm" onClick={() => navigate("/TranList")}>
-                            <label>See More</label>
-                        </Button>
-                    )
-                )}
-            </div>
+            {filteredTransactionList.length === 0 && loggedInUser ? (
+                <p>No transactions available.</p>
+            ) : (
+                <>
+                    {filteredTransactionList.map((transaction) => {
+                        return (
+                            <TransactionCard
+                                key={transaction.id}
+                                transaction={transaction}
+                                setShowTransactionForm={setShowTransactionForm}
+                                setShowConfirmDeleteDialog={setShowConfirmDeleteDialog}
+                            />
+                        );
+                    })}
+                    <div style={{ display: 'flex', justifyContent: 'center' }}>
+                        {!loggedInUser ? (
+                            <p style={{ fontSize: "50px" }}>Please log-in</p>
+                        ) : (
+                            location.pathname === "/TranList" ? (
+                                <Button size="sm" onClick={loadMoreTransactions}>
+                                    <label>See more</label>
+                                </Button>
+                            ) : (
+                                <Button size="sm" onClick={() => navigate("/TranList")}>
+                                    <label>See More</label>
+                                </Button>
+                            )
+                        )}
+                    </div>
+                </>
+            )}
         </Container>
     );
 }

@@ -22,7 +22,7 @@ app.use("/transaction", transactionController);
 app.use("/standingOrder", standingOrderController)
 app.use("/user", userController);
 
-cron.schedule("55 16 * * *", () => {
+cron.schedule("0 12 * * *", () => {
     const today = new Date();
     const dayOfMonth = today.getDate();
 
