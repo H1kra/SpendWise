@@ -7,9 +7,6 @@ function StandingOrderDateTimeBadge({ standingOrder }) {
                 <div>{dateToShow.getDate().toString().padStart(2, "0")}</div>
                 <div>{dateToShow.toLocaleString("cs-CZ", { month: "short" })}</div>
             </div>
-            <div className={"rounded-bottom"} style={timeStyle()}>
-                {dateToShow.toLocaleString("cs-CZ", { timeStyle: "short" })}
-            </div>
         </div>
     );
 }

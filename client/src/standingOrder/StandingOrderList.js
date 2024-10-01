@@ -20,20 +20,25 @@ function StandingOrderList() {
     const navigate = useNavigate();
     const location = useLocation();
     const { loggedInUser } = useContext(UserContext);
-    const [i, setI] = useState(8);
+    const [pageSize, setPageSize] = useState(4);
+    const [startIndex, setStartIndex] = useState(0);
 
 
-    const getMore = () => {
-        setI(prevI => prevI + 4); // Incrementing i by 4 when the button is clicked
-    };
 
     useEffect(() => {
-        if (location.pathname === "/TranList") {
-            setFilteredStandingOrderList(standingOrderList.slice(0, i));
-        } else {
-            setFilteredStandingOrderList(standingOrderList.slice(0, 4));
-        }
-    }, [location.pathname, standingOrderList, i]);
+        setFilteredStandingOrderList([]);
+        setPageSize(4); // Reset page size
+        setStartIndex(0); // Reset start index
+    }, [loggedInUser]);
+
+    useEffect(() => {
+        const endIndex = Math.min(startIndex + pageSize, standingOrderList.length);
+        setFilteredStandingOrderList(standingOrderList.slice(startIndex, endIndex));
+    }, [standingOrderList, startIndex, pageSize]);
+
+    const loadMoreStandingOrders= () => {
+        setPageSize(prevPageSize => prevPageSize + 4);
+    };
 
     return (
         <Container>
@@ -47,31 +52,37 @@ function StandingOrderList() {
                     onDelete={() => handlerMap.handleDelete(showConfirmDeleteDialog.id)}
                 />
             ) : null}
-            {filteredStandingOrderList.map((standingOrder) => {
-                return (
-                    <StandingOrderCard
-                        key={standingOrder.id}
-                        standingOrder={standingOrder}
-                        setShowStandingOrderForm={setShowStandingOrderForm}
-                        setShowConfirmDeleteDialog={setShowConfirmDeleteDialog}
-                    />
-                );
-            })}
-            <div style={{display: 'flex', justifyContent: 'center'}}>
-                {!loggedInUser ? (
-                    <p></p>
-                ) : (
-                    location.pathname === "/standingOrders" ? (
-                        <Button size="sm" onClick={getMore}>
-                            <label>See more</label>
-                        </Button>
-                    ) : (
-                        <Button size="sm" onClick={() => navigate("/standingOrders")}>
-                            <label>See more</label>
-                        </Button>
-                    )
-                )}
-            </div>
+            {filteredStandingOrderList.length === 0 && loggedInUser ? (
+                <p>No standing orders available.</p>
+            ) : (
+                <>
+                    {filteredStandingOrderList.map((standingOrder) => {
+                        return (
+                            <StandingOrderCard
+                                key={standingOrder.id}
+                                standingOrder={standingOrder}
+                                setShowStandingOrderForm={setShowStandingOrderForm}
+                                setShowConfirmDeleteDialog={setShowConfirmDeleteDialog}
+                            />
+                        );
+                    })}
+                    <div style={{ display: 'flex', justifyContent: 'center' }}>
+                        {!loggedInUser ? (
+                            <p style={{ fontSize: "50px" }}></p>
+                        ) : (
+                            location.pathname === "/standingOrders" ? (
+                                <Button size="sm" onClick={loadMoreStandingOrders}>
+                                    <label>See more</label>
+                                </Button>
+                            ) : (
+                                <Button size="sm" onClick={() => navigate("/standingOrders")}>
+                                    <label>See More</label>
+                                </Button>
+                            )
+                        )}
+                    </div>
+                </>
+            )}
         </Container>
     );
 }

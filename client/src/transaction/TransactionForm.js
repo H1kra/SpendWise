@@ -41,8 +41,8 @@ function TransactionForm({ setShowTransactionForm, transaction }) {
             >
                 <Modal.Header>
                     <Modal.Title>{`${
-                        transaction.id ? "Upravit" : "Vytvořit"
-                    } transakci`}</Modal.Title>
+                        transaction.id ? "Edit" : "Create"
+                    } transaction`}</Modal.Title>
                     <CloseButton onClick={() => setShowTransactionForm(false)} />
                 </Modal.Header>
                 <Modal.Body style={{ position: "relative" }}>
@@ -52,7 +52,7 @@ function TransactionForm({ setShowTransactionForm, transaction }) {
                         dismissible
                         onClose={() => setShowAlert(null)}
                     >
-                        <Alert.Heading>Nepodařilo se vytvořit transakci</Alert.Heading>
+                        <Alert.Heading>Unable to create transaction</Alert.Heading>
                         <pre>{showAlert}</pre>
                     </Alert>
 
@@ -121,7 +121,7 @@ function TransactionForm({ setShowTransactionForm, transaction }) {
                         Zavřít
                     </Button>
                     <Button type="submit" variant="primary" disabled={isPending}>
-                        {transaction.id ? "Upravit" : "Vytvořit"}
+                        {transaction.id ? "Edit" : "Create"}
                     </Button>
                 </Modal.Footer>
             </Form>
